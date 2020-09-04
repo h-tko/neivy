@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1088983719248",
+    "firebase_url": "https://neivy-4c6a2.firebaseio.com",
+    "project_id": "neivy-4c6a2",
+    "storage_bucket": "neivy-4c6a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088983719248:android:d45f4fbd351227d3ede055",
+        "android_client_info": {
+          "package_name": "jp.htko.neivy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088983719248-160aaahsvoapa8svt7r91go1a95kki3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-DCVKzyzFH1vdm8eKDj53Bcz29Ps_VU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088983719248-160aaahsvoapa8svt7r91go1a95kki3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088983719248:android:0e477193986b51c1ede055",
+        "android_client_info": {
+          "package_name": "jp.htko.neivy.development"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088983719248-160aaahsvoapa8svt7r91go1a95kki3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-DCVKzyzFH1vdm8eKDj53Bcz29Ps_VU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088983719248-160aaahsvoapa8svt7r91go1a95kki3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
