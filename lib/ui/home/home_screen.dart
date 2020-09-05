@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:neivy/di/view_model_registry.dart';
 import 'package:neivy/ui/components/clipped_image.dart';
+import 'package:neivy/ui/regist/regist_screen.dart';
 import 'package:neivy/view_model/home_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -24,9 +26,14 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
-            child: ClippedImage.build(_buildMainImage(context)),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height - 40.0,
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(top: 20.0, right: 20.0, left: 20.0),
+              child: ClippedImage.build(_buildMainImage(context)),
+            ),
           ),
           Expanded(
             child: Row(
@@ -44,7 +51,18 @@ class HomeScreen extends StatelessWidget {
                       iconSize: 40.0,
                       color: Colors.brown,
                       icon: Icon(Icons.create_outlined),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => ChangeNotifierProvider(
+                              create: (_) =>
+                                  ViewModelRegistry.makeRegistViewModel(),
+                              child: RegistScreen(),
+                            ),
+                            fullscreenDialog: true,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),

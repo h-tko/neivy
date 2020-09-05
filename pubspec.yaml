@@ -33,6 +33,8 @@ dependencies:
   firebase_crashlytics: any
   firebase_storage: any
 
+  image_picker: any
+
   provider:
 
   sqflite:
