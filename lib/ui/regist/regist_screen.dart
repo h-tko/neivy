@@ -36,7 +36,9 @@ class RegistScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
                 SizedBox(width: 20.0),
                 RaisedButton(
