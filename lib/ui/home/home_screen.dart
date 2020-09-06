@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neivy/config/colors.dart';
 import 'package:neivy/di/view_model_registry.dart';
 import 'package:neivy/ui/components/clipped_image.dart';
 import 'package:neivy/ui/regist/regist_screen.dart';
@@ -45,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.all(5.0),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.amber[300],
+                      color: successColor,
                     ),
                     child: IconButton(
                       iconSize: 40.0,

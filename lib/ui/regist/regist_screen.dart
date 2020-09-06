@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:neivy/config/colors.dart';
 
 class RegistScreen extends StatelessWidget {
   @override
@@ -16,7 +17,7 @@ class RegistScreen extends StatelessWidget {
                 decoration: const InputDecoration(labelText: '撮影した場所'),
               ),
             ),
-            SizedBox(height: 15.0),
+            SizedBox(height: 20.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: TextField(
@@ -24,6 +25,29 @@ class RegistScreen extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(labelText: 'おすすめポイント'),
               ),
+            ),
+            SizedBox(height: 40.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                OutlineButton(
+                  child: Text("閉じる"),
+                  color: Colors.brown,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  onPressed: () {},
+                ),
+                SizedBox(width: 20.0),
+                RaisedButton(
+                  child: Text("投稿"),
+                  color: successColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  onPressed: () {},
+                ),
+              ],
             ),
           ],
         ),
