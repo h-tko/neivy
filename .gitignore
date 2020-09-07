@@ -41,3 +41,6 @@ app.*.symbols
 app.*.map.json
 
 .flutter-plugins*
+
+ios/Flutter/Generated*
+ios/Flutter/flutter_export_environment*

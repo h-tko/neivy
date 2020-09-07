@@ -7,16 +7,19 @@ import 'package:provider/provider.dart';
 class RegistScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<RegistViewModel>(context);
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            _buildImageSelector(context),
+            _buildImageArea(context),
             SizedBox(height: 15.0),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 15.0),
               child: TextField(
                 decoration: const InputDecoration(labelText: '撮影した場所'),
+                onChanged: (value) => vm.changePlace(value),
               ),
             ),
             SizedBox(height: 20.0),
@@ -26,6 +29,7 @@ class RegistScreen extends StatelessWidget {
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(labelText: 'おすすめポイント'),
+                onChanged: (value) => vm.changeReason(value),
               ),
             ),
             SizedBox(height: 40.0),
@@ -49,7 +53,13 @@ class RegistScreen extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    vm.validate();
+
+                    if (vm.hasError) {
+                      return;
+                    }
+                  },
                 ),
               ],
             ),
@@ -59,8 +69,22 @@ class RegistScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildImageSelector(BuildContext context) {
+  Widget _buildImagePreview(BuildContext context) {
     final vm = Provider.of<RegistViewModel>(context);
+
+    return Image.asset(vm.imagePath);
+  }
+
+  Widget _buildImageArea(BuildContext context) {
+    final vm = Provider.of<RegistViewModel>(context);
+    var form;
+
+    // 画像の有無で表示する内容を切り替える
+    if (vm.hasImage) {
+      form = _buildImagePreview(context);
+    } else {
+      form = _buildImageSelector(context);
+    }
 
     return Padding(
       padding: EdgeInsets.only(
@@ -82,39 +106,43 @@ class RegistScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
-            child: Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Icon(
-                    Icons.camera_alt,
-                    color: Colors.black54,
-                    size: 60.0,
-                  ),
-                ),
-                Text(
-                  '写真を載せる',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Hiragino Kaku Gothic ProN',
-                    color: Colors.brown,
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                Text(
-                  'あなたのお気に入りの風景を載せましょう',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'Hiragino Kaku Gothic ProN',
-                    color: Colors.brown,
-                  ),
-                ),
-              ],
-            ),
+            child: form,
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildImageSelector(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(top: 10.0),
+          child: Icon(
+            Icons.camera_alt,
+            color: Colors.black54,
+            size: 60.0,
+          ),
+        ),
+        Text(
+          '写真を載せる',
+          style: TextStyle(
+            fontSize: 18.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Hiragino Kaku Gothic ProN',
+            color: Colors.brown,
+          ),
+        ),
+        SizedBox(height: 10.0),
+        Text(
+          'あなたのお気に入りの風景を載せましょう',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Hiragino Kaku Gothic ProN',
+            color: Colors.brown,
+          ),
+        ),
+      ],
     );
   }
 }
