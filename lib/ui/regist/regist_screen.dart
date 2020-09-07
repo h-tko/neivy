@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neivy/config/colors.dart';
+import 'package:neivy/view_model/regist_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RegistScreen extends StatelessWidget {
   @override
@@ -58,6 +60,8 @@ class RegistScreen extends StatelessWidget {
   }
 
   Widget _buildImageSelector(BuildContext context) {
+    final vm = Provider.of<RegistViewModel>(context);
+
     return Padding(
       padding: EdgeInsets.only(
         top: 20.0,
@@ -67,7 +71,9 @@ class RegistScreen extends StatelessWidget {
       child: InkWell(
         onTap: () {
           final picker = ImagePicker();
-          final file = picker.getImage(source: ImageSource.gallery);
+          picker
+              .getImage(source: ImageSource.gallery)
+              .then((value) => vm.changeImage(value));
         },
         child: Container(
           height: 200.0,
