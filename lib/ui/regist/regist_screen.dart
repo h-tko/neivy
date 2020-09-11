@@ -5,65 +5,78 @@ import 'package:neivy/view_model/regist_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RegistScreen extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<RegistViewModel>(context);
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            _buildImageArea(context),
-            SizedBox(height: 15.0),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextField(
-                decoration: const InputDecoration(labelText: '撮影した場所'),
-                onChanged: (value) => vm.changePlace(value),
-              ),
-            ),
-            SizedBox(height: 20.0),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15.0),
-              child: TextField(
-                maxLines: null,
-                keyboardType: TextInputType.multiline,
-                decoration: const InputDecoration(labelText: 'おすすめポイント'),
-                onChanged: (value) => vm.changeReason(value),
-              ),
-            ),
-            SizedBox(height: 40.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                OutlineButton(
-                  child: Text("閉じる"),
-                  color: Colors.brown,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              _buildImageArea(context),
+              SizedBox(height: 15.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText: '撮影した場所',
+                    errorText: vm.errors['place'],
                   ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
+                  validator: (value) => value.isEmpty ? '必須です' : null,
+                  autovalidateMode: AutovalidateMode.disabled,
+                  onChanged: (value) => vm.changePlace(value),
                 ),
-                SizedBox(width: 20.0),
-                RaisedButton(
-                  child: Text("投稿"),
-                  color: successColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
+              ),
+              SizedBox(height: 20.0),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: TextFormField(
+                  maxLines: null,
+                  keyboardType: TextInputType.multiline,
+                  decoration: InputDecoration(
+                    labelText: 'おすすめポイント',
+                    errorText: vm.errors['reason'],
                   ),
-                  onPressed: () {
-                    vm.validate();
+                  onChanged: (value) => vm.changeReason(value),
+                ),
+              ),
+              SizedBox(height: 40.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  OutlineButton(
+                    child: Text("閉じる"),
+                    color: Colors.brown,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                  SizedBox(width: 20.0),
+                  RaisedButton(
+                    child: Text("投稿"),
+                    color: successColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    onPressed: () {
+                      // バリデーション実行
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      }
 
-                    if (vm.hasError) {
-                      return;
-                    }
-                  },
-                ),
-              ],
-            ),
-          ],
+                      vm.regist();
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -72,7 +85,14 @@ class RegistScreen extends StatelessWidget {
   Widget _buildImagePreview(BuildContext context) {
     final vm = Provider.of<RegistViewModel>(context);
 
-    return Image.asset(vm.imagePath);
+    return Container(
+      height: 200.0,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey[300]),
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Image.asset(vm.imagePath),
+    );
   }
 
   Widget _buildImageArea(BuildContext context) {
@@ -99,50 +119,50 @@ class RegistScreen extends StatelessWidget {
               .getImage(source: ImageSource.gallery)
               .then((value) => vm.changeImage(value));
         },
-        child: Container(
-          height: 200.0,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.brown),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Center(
-            child: form,
-          ),
-        ),
+        child: form,
       ),
     );
   }
 
   Widget _buildImageSelector(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(top: 10.0),
-          child: Icon(
-            Icons.camera_alt,
-            color: Colors.black54,
-            size: 60.0,
-          ),
+    return Container(
+      height: 200.0,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.brown),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Center(
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(top: 10.0),
+              child: Icon(
+                Icons.camera_alt,
+                color: Colors.black54,
+                size: 60.0,
+              ),
+            ),
+            Text(
+              '写真を載せる',
+              style: TextStyle(
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Hiragino Kaku Gothic ProN',
+                color: Colors.brown,
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Text(
+              'あなたのお気に入りの風景を載せましょう',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Hiragino Kaku Gothic ProN',
+                color: Colors.brown,
+              ),
+            ),
+          ],
         ),
-        Text(
-          '写真を載せる',
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Hiragino Kaku Gothic ProN',
-            color: Colors.brown,
-          ),
-        ),
-        SizedBox(height: 10.0),
-        Text(
-          'あなたのお気に入りの風景を載せましょう',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontFamily: 'Hiragino Kaku Gothic ProN',
-            color: Colors.brown,
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

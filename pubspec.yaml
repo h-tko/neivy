@@ -32,6 +32,7 @@ dependencies:
   firebase_analytics: any
   firebase_crashlytics: any
   firebase_storage: any
+  firebase_database: any
 
   image_picker: any
 
